@@ -9,6 +9,81 @@
   <link href="https://api.fontshare.com/v2/css?f[]=boska@400,500,700&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
 
   <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse-scale {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Floating background orbs */
+    .ambient-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: overlay;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+      filter: blur(40px);
+    }
+
+    .orb-1 { width: 300px; height: 300px; background: #e2783f; top: 10%; left: 5%; animation: float 8s ease-in-out infinite; }
+    .orb-2 { width: 250px; height: 250px; background: #d25b22; top: 60%; right: 10%; animation: float 6s ease-in-out infinite 1s; }
+    .orb-3 { width: 200px; height: 200px; background: #fce6d9; bottom: 10%; left: 50%; animation: float 7s ease-in-out infinite 2s; }
+
     :root,
     [data-theme="light"] {
       --bg: #f7f4ef;
@@ -129,6 +204,29 @@
       margin-inline: auto;
     }
 
+    /* Animation helpers */
+    .animate-in {
+      animation: slideInUp 0.6s ease-out forwards;
+    }
+
+    .animate-in-delayed {
+      animation: slideInUp 0.8s ease-out 0.2s forwards;
+      opacity: 0;
+    }
+
+    .hero-card {
+      animation: slideInDown 0.7s ease-out;
+    }
+
+    .hero-stat {
+      animation: slideInUp 0.6s ease-out forwards;
+    }
+
+    .hero-stat:nth-child(1) { animation-delay: 0.1s; opacity: 0; }
+    .hero-stat:nth-child(2) { animation-delay: 0.2s; opacity: 0; }
+    .hero-stat:nth-child(3) { animation-delay: 0.3s; opacity: 0; }
+    .hero-stat:nth-child(4) { animation-delay: 0.4s; opacity: 0; }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -185,6 +283,12 @@
       font-weight: 700;
       font-size: 0.9rem;
       letter-spacing: 0.08em;
+      transition: all var(--transition-fast);
+    }
+
+    .logo-mark:hover {
+      animation: rotate 6s linear infinite;
+      border-color: var(--accent);
     }
 
     .logo-text {
@@ -300,6 +404,7 @@
       height: 2px;
       border-radius: 999px;
       background: var(--accent);
+      animation: slideInUp 0.7s ease-out;
     }
 
     .hero-title {
@@ -337,6 +442,7 @@
       height: 6px;
       border-radius: 999px;
       background: #16a34a;
+      animation: pulse-scale 2s ease-in-out infinite;
     }
 
     .hero-actions {
@@ -368,19 +474,15 @@
 
     .btn-primary:hover {
       background: color-mix(in srgb, var(--accent) 90%, black 10%);
-      transform: translateY(-2px);
-    }
-
-    .btn-ghost {
-      border-color: var(--border);
-      background: color-mix(in srgb, var(--surface) 85%, transparent);
-      color: var(--ink-soft);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(226, 120, 63, 0.2);
     }
 
     .btn-ghost:hover {
       border-color: var(--accent);
       color: var(--ink);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
     }
 
     .hero-stats {
@@ -426,6 +528,14 @@
       box-shadow: var(--shadow-soft);
       display: grid;
       gap: var(--space-3);
+      animation: slideInDown 0.7s ease-out;
+      transition: all var(--transition-med);
+    }
+
+    .hero-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 24px 60px rgba(226, 120, 63, 0.15);
+      transform: translateY(-8px);
     }
 
     .hero-photo {
@@ -435,6 +545,12 @@
       border: 1px solid var(--border);
       aspect-ratio: 4/5;
       position: relative;
+      transition: all var(--transition-med);
+    }
+
+    .hero-card:hover .hero-photo {
+      border-color: var(--accent);
+      transform: scale(1.02);
     }
 
     .hero-photo-label {
@@ -471,6 +587,20 @@
       border-radius: 999px;
       border: 1px solid var(--border);
       background: color-mix(in srgb, var(--surface) 90%, transparent);
+      animation: slideInUp 0.6s ease-out forwards;
+      opacity: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .hero-strip .hero-pill:nth-child(1) { animation-delay: 0.2s; }
+    .hero-strip .hero-pill:nth-child(2) { animation-delay: 0.3s; }
+    .hero-strip .hero-pill:nth-child(3) { animation-delay: 0.4s; }
+    .hero-strip .hero-pill:nth-child(4) { animation-delay: 0.5s; }
+
+    .hero-pill:hover {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, var(--surface) 90%);
+      transform: translateY(-2px);
     }
 
     /* SECTION FRAME */
@@ -502,6 +632,8 @@
       height: 1.5px;
       border-radius: 999px;
       background: var(--accent);
+      animation: slideInUp 0.6s ease-out;
+    }
     }
 
     .section-title {
@@ -597,6 +729,14 @@
       border: 1px solid var(--border);
       padding: var(--space-4) var(--space-4);
       box-shadow: var(--shadow-soft);
+      animation: slideInUp 0.6s ease-out;
+      transition: all var(--transition-med);
+    }
+
+    .exp-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 20px 50px rgba(226, 120, 63, 0.12);
+      transform: translateY(-4px);
     }
 
     .exp-meta-row {
@@ -1260,6 +1400,13 @@
   </style>
 </head>
 <body>
+  <!-- Animated background orbs -->
+  <div class="ambient-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
   <!-- Loading animation -->
   <div class="loader-wrapper" id="loader-wrapper">
     <div class="loader-container">
@@ -1680,6 +1827,193 @@
       }, { threshold: 0.18 });
 
       els.forEach(el => io.observe(el));
+    })();
+
+    // 🎮 EASTER EGGS & QUIRKY INTERACTIONS
+    
+    // Konami Code Easter Egg - ↑ ↑ ↓ ↓ ← → ← → B A
+    (function () {
+      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      let konamiIndex = 0;
+      
+      document.addEventListener('keydown', (e) => {
+        const key = e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' 
+          ? e.key 
+          : e.key.toLowerCase();
+        
+        if (key === konamiCode[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            activateSecretMode();
+            konamiIndex = 0;
+          }
+        } else {
+          konamiIndex = 0;
+        }
+      });
+      
+      function activateSecretMode() {
+        // Add quirky animations and message
+        const body = document.body;
+        body.style.animation = 'rotate 5s ease-in 1';
+        
+        const msg = document.createElement('div');
+        msg.innerHTML = '✨ You found the secret! Yasharth is secretly a dev too 🚀';
+        msg.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #e2783f 0%, #d25b22 100%);
+          color: white;
+          padding: 2rem 3rem;
+          border-radius: 16px;
+          font-weight: bold;
+          z-index: 10000;
+          animation: slideInUp 0.6s ease-out;
+          box-shadow: 0 30px 80px rgba(226, 120, 63, 0.3);
+        `;
+        document.body.appendChild(msg);
+        
+        setTimeout(() => {
+          msg.style.animation = 'slideInUp 0.6s ease-out reverse';
+          setTimeout(() => msg.remove(), 600);
+        }, 3000);
+      }
+    })();
+
+    // Click particles easter egg - click anywhere for subtle particles
+    (function () {
+      document.addEventListener('click', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        
+        const x = e.clientX;
+        const y = e.clientY;
+        const particles = ['✨', '⚡', '💫', '🎯'];
+        const particle = particles[Math.floor(Math.random() * particles.length)];
+        
+        const el = document.createElement('div');
+        el.innerHTML = particle;
+        el.style.cssText = `
+          position: fixed;
+          left: ${x}px;
+          top: ${y}px;
+          pointer-events: none;
+          font-size: 1.5rem;
+          z-index: 9999;
+          animation: float 1s ease-out forwards;
+          opacity: 0;
+        `;
+        document.body.appendChild(el);
+        
+        setTimeout(() => el.remove(), 1000);
+      });
+    })();
+
+    // Animated counter for stats
+    (function () {
+      const stats = document.querySelectorAll('.hero-stat-value');
+      
+      function animateCounter(el) {
+        const text = el.textContent.trim();
+        const num = parseInt(text) || 0;
+        const duration = 1500;
+        const start = Date.now();
+        
+        if (num === 0) return;
+        
+        const animate = () => {
+          const elapsed = Date.now() - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const current = Math.floor(num * progress);
+          
+          if (text.includes('+')) {
+            el.textContent = current + '+';
+          } else if (text.includes('%')) {
+            el.textContent = current + '%';
+          } else if (text.includes('K')) {
+            el.textContent = (num * progress).toFixed(1).replace(/\.0$/, '') + 'K+';
+          } else {
+            el.textContent = current;
+          }
+          
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+        
+        animate();
+      }
+      
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.counted) {
+              animateCounter(entry.target);
+              entry.target.dataset.counted = 'true';
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+        
+        stats.forEach(stat => io.observe(stat));
+      }
+    })();
+
+    // Random easter egg message on nav logo hover
+    (function () {
+      const logo = document.querySelector('.logo-mark');
+      if (!logo) return;
+      
+      const messages = [
+        'spinning...', 
+        'loading magic...', 
+        'deploying vibes...', 
+        'finding bugs...',
+        'making chai ☕',
+        'planning sprints 📋'
+      ];
+      
+      let messageIndex = 0;
+      let originalText = logo.textContent;
+      
+      logo.addEventListener('mouseenter', () => {
+        messageIndex = (messageIndex + 1) % messages.length;
+        logo.title = messages[messageIndex];
+      });
+    })();
+
+    // Easter egg: Double-click on email to celebrate
+    (function () {
+      const emailLink = document.querySelector('a[href^="mailto"]');
+      if (!emailLink) return;
+      
+      let clickCount = 0;
+      emailLink.addEventListener('click', (e) => {
+        clickCount++;
+        if (clickCount >= 7) {
+          const badge = document.createElement('div');
+          badge.innerHTML = '💌 Email superstar!';
+          badge.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #16a34a;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 999px;
+            z-index: 9999;
+            animation: slideInUp 0.5s ease-out;
+            font-weight: 600;
+          `;
+          document.body.appendChild(badge);
+          setTimeout(() => {
+            badge.style.animation = 'slideInUp 0.5s ease-out reverse';
+            setTimeout(() => badge.remove(), 500);
+          }, 2000);
+          clickCount = 0;
+        }
+      }, true);
     })();
   </script>
 </body>

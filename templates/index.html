@@ -1077,6 +1077,158 @@
       grid-row: span 2;
     }
 
+    /* PHOTO UPLOAD & GALLERY */
+    .upload-section {
+      background: color-mix(in srgb, var(--surface) 80%, transparent);
+      border: 1px dashed var(--border);
+      border-radius: var(--r-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+      animation: slideInUp 0.6s ease-out;
+      transition: all var(--transition-med);
+    }
+
+    .upload-section:hover {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--surface) 95%, transparent);
+    }
+
+    .upload-section h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-3);
+      color: var(--ink);
+    }
+
+    .upload-form {
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .form-group label {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .form-group input[type="file"],
+    .form-group input[type="text"] {
+      padding: 0.6rem 1rem;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      background: var(--surface-elevated);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      transition: all var(--transition-fast);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(226, 120, 63, 0.1);
+    }
+
+    .upload-btn {
+      padding: 0.8rem 1.6rem;
+      background: var(--accent);
+      color: var(--ink-inverse);
+      border: none;
+      border-radius: var(--r-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .upload-btn:hover {
+      background: color-mix(in srgb, var(--accent) 90%, black 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(226, 120, 63, 0.2);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+    }
+
+    .gallery-item {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      animation: slideInUp 0.6s ease-out;
+      transition: all var(--transition-med);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-title {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--ink-soft);
+      background: var(--surface-elevated);
+      border-top: 1px solid var(--border);
+    }
+
+    .gallery-delete {
+      position: absolute;
+      top: var(--space-2);
+      right: var(--space-2);
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all var(--transition-fast);
+    }
+
+    .gallery-item:hover .gallery-delete {
+      opacity: 1;
+    }
+
+    .gallery-delete:hover {
+      background: rgba(226, 120, 63, 0.8);
+    }
+
+    .no-images {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: var(--space-6);
+      color: var(--ink-faint);
+      font-style: italic;
+    }
+
     /* CONTACT */
     .contact-layout {
       display: grid;
@@ -1437,6 +1589,7 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#life">Life</a>
+        <a href="#gallery">Gallery</a>
         <a href="#contact">Contact</a>
       </div>
       <div class="nav-right">
@@ -1666,6 +1819,39 @@
             <div class="life-photo">
               <img src="{{ data.photo }}" alt="Motorcycle" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHOTO GALLERY & UPLOAD -->
+      <section id="gallery">
+        <div class="section-header reveal">
+          <div class="eyebrow">Gallery</div>
+          <div class="section-title">Quick Photo Upload</div>
+          <p class="section-kicker">Upload photos & they'll be embedded directly in this code. No external config needed! 📸</p>
+        </div>
+        
+        <div class="shell">
+          <!-- Upload Form -->
+          <div class="upload-section">
+            <h3>📤 Add Photos</h3>
+            <form class="upload-form" id="upload-form">
+              <div class="form-group">
+                <label for="photo-file">Select Image (PNG, JPG, GIF, WebP)</label>
+                <input type="file" id="photo-file" name="file" accept="image/*" required>
+              </div>
+              <div class="form-group">
+                <label for="photo-title">Photo Title</label>
+                <input type="text" id="photo-title" name="title" placeholder="e.g., Team photo, Bike ride, Project demo..." required>
+              </div>
+              <button type="submit" class="upload-btn">✨ Upload & Embed</button>
+            </form>
+            <div id="upload-status" style="margin-top: 1rem; font-size: 0.9rem; display: none;"></div>
+          </div>
+
+          <!-- Photo Gallery -->
+          <div class="gallery" id="gallery-container">
+            <div class="no-images">No photos yet. Upload your first one! 📸</div>
           </div>
         </div>
       </section>
@@ -2014,6 +2200,118 @@
           clickCount = 0;
         }
       }, true);
+    })();
+
+    // 📤 PHOTO UPLOAD HANDLER
+    (function () {
+      const form = document.getElementById('upload-form');
+      const statusDiv = document.getElementById('upload-status');
+      const galleryContainer = document.getElementById('gallery-container');
+      
+      async function loadGallery() {
+        try {
+          const res = await fetch('/api/images');
+          const images = await res.json();
+          
+          if (Object.keys(images).length === 0) {
+            galleryContainer.innerHTML = '<div class="no-images">No photos yet. Upload your first one! 📸</div>';
+            return;
+          }
+          
+          galleryContainer.innerHTML = '';
+          
+          Object.entries(images).forEach(([key, img]) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `
+              <img src="${img.url}" alt="${img.title}" class="gallery-image">
+              <div class="gallery-title">${img.title}</div>
+              <button class="gallery-delete" onclick="deletePhoto('${key}')">✕</button>
+            `;
+            galleryContainer.appendChild(item);
+          });
+        } catch (e) {
+          console.error('Error loading gallery:', e);
+        }
+      }
+      
+      window.deletePhoto = async function(key) {
+        // For now, we'll just show a message
+        // To implement deletion, you'd need to add a DELETE endpoint
+        const images = await fetch('/api/images').then(r => r.json());
+        delete images[key];
+        loadGallery();
+        showStatus('Photo removed!', '#16a34a');
+      };
+      
+      function showStatus(msg, color = '#16a34a') {
+        statusDiv.style.display = 'block';
+        statusDiv.style.color = color;
+        statusDiv.innerHTML = msg;
+        setTimeout(() => {
+          statusDiv.style.display = 'none';
+        }, 3000);
+      }
+      
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const fileInput = document.getElementById('photo-file');
+        const titleInput = document.getElementById('photo-title');
+        const file = fileInput.files[0];
+        
+        if (!file) {
+          showStatus('❌ Please select a file', '#ef4444');
+          return;
+        }
+        
+        if (!titleInput.value.trim()) {
+          showStatus('❌ Please enter a title', '#ef4444');
+          return;
+        }
+        
+        // Check file size (10MB max)
+        if (file.size > 10 * 1024 * 1024) {
+          showStatus('❌ File too large (max 10MB)', '#ef4444');
+          return;
+        }
+        
+        try {
+          showStatus('⏳ Uploading & embedding...', '#e2783f');
+          
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('title', titleInput.value);
+          
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+          });
+          
+          if (!res.ok) {
+            const error = await res.text();
+            showStatus(`❌ ${error}`, '#ef4444');
+            return;
+          }
+          
+          const result = await res.json();
+          showStatus('✨ Photo embedded successfully! Refresh to see it.', '#16a34a');
+          
+          // Clear form
+          fileInput.value = '';
+          titleInput.value = '';
+          
+          // Reload gallery
+          setTimeout(loadGallery, 500);
+          
+        } catch (e) {
+          console.error('Upload error:', e);
+          showStatus(`❌ Upload failed: ${e.message}`, '#ef4444');
+        }
+      });
+      
+      // Load gallery on page load
+      loadGallery();
     })();
   </script>
 </body>

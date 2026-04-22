@@ -62,7 +62,7 @@ portfolio_data = {
             "current": False,
             "description": [
                 "Designed and maintained dashboards for the Health & Home product line that became the single source of truth for product leads.",
-                "Turned raw event streams into clean, explainable views for PMs and legal teams — reducing "data arguments" in reviews.",
+                "Turned raw event streams into clean, explainable views for PMs and legal teams — reducing 'data arguments' in reviews.",
                 "Worked closely with product leads to define thresholds, alerts, and narratives around user behaviour and abuse patterns."
             ],
             "tags": ["Stakeholder‑first storytelling", "Product analytics", "SQL · dashboards"]
@@ -140,11 +140,11 @@ portfolio_data = {
         {
             "tag": "Bike rides",
             "title": "Maps, mountains, and quiet roads.",
-            "body": "Solo rides on my Himalayan are where I do a surprising amount of thinking — about systems, trade‑offs, and what "good work" feels like."
+            "body": "Solo rides on my Himalayan are where I do a surprising amount of thinking — about systems, trade‑offs, and what 'good work' feels like."
         },
         {
             "tag": "Learning",
-            "title": "Always in "product school".",
+            "title": "Always in 'product school'.",
             "body": "I break down products I use daily — flows, pricing, onboarding — and experiment with data‑driven side projects to sharpen the craft."
         },
         {
